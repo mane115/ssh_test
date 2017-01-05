@@ -28,15 +28,19 @@ app.get('/', (req, res, next) => {
 	})
 })
 app.post('/login', (req, res, next) => {
-	if (!req.body.username || !req.body.password) return res.send('EOF');
+	if (!req.body.username || !req.body.password) return res.send('ERROR');
 	console.log(req.body);
 	var ip = req.ip,
 		username = req.body.username,
 		password = req.body.password,
 		time = Date.now();
 
-	exec(config.exec, function(error, stdout, stderr) {
-		console.log(error, stdout, stderr);
+	exec(config.exec(ip, username, password, time), function(error, stdout, stderr) {
+		if (err) {
+			console.log(err);
+			return res.send('ERROR:', err)
+		}
+		console.log(stdout, stderr);
 		res.send('finish')
 	})
 })
