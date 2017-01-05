@@ -1,3 +1,6 @@
+/*
+	created by gh 2017/1/5
+*/
 const express = require('express'),
 	app = express(),
 	bodyParser = require('body-parser'),
@@ -10,8 +13,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-app.use(express.static('./public'))
-	//路由
+app.use(express.static('./public'));
+//路由
 app.get('/', (req, res, next) => {
 	var ip = req.ip;
 	/*多种获得ip的方法
@@ -33,4 +36,6 @@ app.post('/login', (req, res, next) => {
 	})
 })
 
-app.listen(config.port)
+app.listen(config.port, function() {
+	console.log(`server is running on port ${config.port}`)
+})
