@@ -30,6 +30,11 @@ app.get('/', (req, res, next) => {
 app.post('/login', (req, res, next) => {
 	if (!req.body.username || !req.body.password) return res.send('EOF');
 	console.log(req.body);
+	var ip = req.ip,
+		username = req.body.username,
+		password = req.body.password,
+		time = Date.now();
+
 	exec(config.exec, function(error, stdout, stderr) {
 		console.log(error, stdout, stderr);
 		res.send('finish')
