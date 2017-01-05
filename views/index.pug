@@ -1,0 +1,41 @@
+html
+  head
+  title 登录
+
+  body(style='text-align:center;padding-top:20px')
+  p ip:#{ip}
+  p.clock  &nbsp;
+  input(id='username' placeholder='用户名' style='margin-bottom:20px' )
+  br
+  input(id='password' placeholder='密码' style='margin-bottom:20px' type='password')
+  br
+  button#submit 登录
+  script(type='text/javascript', src='//cdn.bootcss.com/jquery/3.1.1/jquery.min.js')
+  script(type='text/javascript', src='/jquery.md5.js')
+  script.
+    var serverTime = #{date};
+    var start = Date.now();
+    $('.clock').html(`date:${new Date(serverTime)}`)
+    setInterval(function(){
+    	var now = Date.now()-start;
+    	$('.clock').html(`date:${new Date(serverTime+now)}`)
+    })
+    $('#submit').unbind().click(function(){
+    	var username = $('#username').val();
+    	var password = $.md5($('#password').val());
+    	console.log(username,password)
+    	if(!username || !password) return alert('imformation require');
+    	var option = {
+    		contentType :'application/json',
+    		method: 'POST',
+    		data: JSON.stringify({
+    			username:username,
+    			password:password
+    		}),
+    		url:'/login',
+    		success:function(data){
+    			alert(data)
+    		}
+    	};
+    	$.ajax(option)
+    })
