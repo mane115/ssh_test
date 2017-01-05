@@ -22,15 +22,14 @@ html
     })
     $('#submit').unbind().click(function(){
     	var username = $('#username').val();
-    	var password = $.md5($('#password').val());
-    	console.log(username,password)
-    	if(!username || !password) return alert('imformation require');
+    	var password = $('#password').val();
+    	if(!username || !password) return alert('information require');
     	var option = {
     		contentType :'application/json',
     		method: 'POST',
     		data: JSON.stringify({
     			username:username,
-    			password:password
+    			password:$.md5(password)
     		}),
     		url:'/login',
     		success:function(data){
